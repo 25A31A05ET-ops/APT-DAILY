@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AptiDaily - Daily Aptitude Practice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-100 min-h-screen font-sans antialiased transition-colors duration-200">
+
+  <!-- Navigation -->
+  <nav class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16">
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="showSection('home')">
+          <div class="bg-brand-600 text-white p-2 rounded-lg font-bold text-xl">
+            <i class="fa-solid fa-brain"></i>
+          </div>
+          <span class="font-extrabold text-xl tracking-tight text-gray-900 dark:text-white">Apti<span class="text-brand-600">Daily</span></span>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-6">
+          <button onclick="showSection('home')" class="hover:text-brand-600 font-medium transition">Dashboard</button>
+          <button onclick="showSection('practice')" class="hover:text-brand-600 font-medium transition">Practice</button>
+          <button onclick="showSection('bookmarks')" class="hover:text-brand-600 font-medium transition">Bookmarks</button>
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-1 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 px-3 py-1.5 rounded-full text-sm font-semibold border border-amber-200 dark:border-amber-800">
+            <i class="fa-solid fa-fire text-amber-500"></i>
+            <span id="streak-count">1</span> Days
+          </div>
+          <button id="theme-toggle" class="p-2 rounded-lg text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <i class="fa-solid fa-moon dark:hidden"></i>
+            <i class="fa-solid fa-sun hidden dark:block"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- DASHBOARD SECTION -->
+    <section id="sec-home" class="space-y-8">
+      <div class="bg-gradient-to-r from-brand-600 to-indigo-800 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
+        <h1 class="text-2xl sm:text-4xl font-extrabold mb-2">Master Quantitative & Verbal Reasoning</h1>
+        <p class="text-indigo-100 max-w-2xl mb-6">Daily curated aptitude challenges to crack tech interviews, GATE, CAT, and placement exams.</p>
+        <button onclick="startQuickQuiz()" class="bg-white text-brand-600 px-6 py-3 rounded-xl font-bold shadow-md hover:bg-indigo-50 transition transform active:scale-95">
+          <i class="fa-solid fa-play mr-2"></i> Start Today's Daily Quiz
+        </button>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+          <p class="text-xs uppercase font-bold text-gray-400">Total Solved</p>
+          <p id="stat-solved" class="text-2xl sm:text-3xl font-black mt-1">0</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+          <p class="text-xs uppercase font-bold text-gray-400">Accuracy Rate</p>
+          <p id="stat-accuracy" class="text-2xl sm:text-3xl font-black mt-1 text-emerald-500">0%</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+          <p class="text-xs uppercase font-bold text-gray-400">Current Streak</p>
+          <p id="stat-streak" class="text-2xl sm:text-3xl font-black mt-1 text-amber-500">1 Day</p>
+        </div>
+        <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+          <p class="text-xs uppercase font-bold text-gray-400">Bookmarks</p>
+          <p id="stat-bookmarks" class="text-2xl sm:text-3xl font-black mt-1 text-brand-500">0</p>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mt-8">Explore Modules</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div onclick="startCategoryQuiz('quant')" class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md cursor-pointer border-l-4 border-l-indigo-500 transition">
+          <div class="text-indigo-500 text-2xl mb-2"><i class="fa-solid fa-calculator"></i></div>
+          <h3 class="font-bold text-lg">Quantitative Aptitude</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Percentages, Profit & Loss, Time & Work, Speed & Distance.</p>
+        </div>
+        <div onclick="startCategoryQuiz('logical')" class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md cursor-pointer border-l-4 border-l-emerald-500 transition">
+          <div class="text-emerald-500 text-2xl mb-2"><i class="fa-solid fa-puzzle-piece"></i></div>
+          <h3 class="font-bold text-lg">Logical Reasoning</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Blood Relations, Coding-Decoding, Series & Arrangements.</p>
+        </div>
+        <div onclick="startCategoryQuiz('verbal')" class="bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm hover:shadow-md cursor-pointer border-l-4 border-l-amber-500 transition">
+          <div class="text-amber-500 text-2xl mb-2"><i class="fa-solid fa-book-open"></i></div>
+          <h3 class="font-bold text-lg">Verbal Ability</h3>
+          <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Reading Comprehension, Synonyms, Grammar & Analogies.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRACTICE CUSTOMIZER SECTION -->
+    <section id="sec-practice" class="hidden space-y-6">
+      <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 max-w-xl mx-auto">
+        <h2 class="text-2xl font-bold mb-4">Create Custom Test</h2>
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold mb-2">Select Category</label>
+            <select id="cfg-category" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3">
+              <option value="all">All Topics</option>
+              <option value="quant">Quantitative Aptitude</option>
+              <option value="logical">Logical Reasoning</option>
+              <option value="verbal">Verbal Ability</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold mb-2">Number of Questions</label>
+            <select id="cfg-length" class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg p-3">
+              <option value="3">3 Questions</option>
+              <option value="5">5 Questions</option>
+            </select>
+          </div>
+          <button onclick="initCustomQuiz()" class="w-full bg-brand-600 text-white font-bold py-3 rounded-lg hover:bg-brand-700 transition">Start Custom Quiz</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUIZ ARENA SECTION -->
+    <section id="sec-quiz" class="hidden max-w-3xl mx-auto space-y-6">
+      <div class="flex justify-between items-center bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm">
+        <span id="quiz-progress" class="font-bold text-sm text-gray-500">Question 1 of 5</span>
+        <div class="flex items-center space-x-4">
+          <span id="quiz-timer" class="font-mono font-bold text-indigo-600 dark:text-indigo-400"><i class="fa-regular fa-clock mr-1"></i> 00:30</span>
+          <button onclick="toggleBookmarkCurrent()" id="btn-bookmark" class="text-gray-400 hover:text-amber-500 text-xl"><i class="fa-regular fa-bookmark"></i></button>
+        </div>
+      </div>
+
+      <div class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-6">
+        <h3 id="quiz-question" class="text-lg sm:text-xl font-semibold leading-relaxed">...</h3>
+        <div id="quiz-options" class="space-y-3"></div>
+
+        <div id="quiz-explanation" class="hidden p-4 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900 text-sm space-y-2">
+          <p class="font-bold text-indigo-900 dark:text-indigo-300">Explanation:</p>
+          <p id="explanation-text" class="text-indigo-800 dark:text-indigo-200"></p>
+        </div>
+
+        <div class="flex justify-end pt-4 border-t border-gray-100 dark:border-gray-700">
+          <button id="btn-next" onclick="nextQuestion()" class="hidden bg-brand-600 text-white px-6 py-2.5 rounded-lg font-bold hover:bg-brand-700 transition">Next Question <i class="fa-solid fa-arrow-right ml-1"></i></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOKMARKS SECTION -->
+    <section id="sec-bookmarks" class="hidden space-y-6">
+      <h2 class="text-2xl font-bold">Saved Questions</h2>
+      <div id="bookmarks-container" class="space-y-4"></div>
+    </section>
+
+  </main>
+
+  <script>
+    // DATA STORE
+    const dataset = [
+      {
+        id: 1,
+        category: 'quant',
+        question: "A train running at the speed of 60 km/hr crosses a pole in 9 seconds. What is the length of the train?",
+        options: ["120 metres", "150 metres", "180 metres", "324 metres"],
+        answer: 1,
+        explanation: "Speed = 60 * (5/18) m/sec = 50/3 m/sec. Length = Speed * Time = (50/3) * 9 = 150 metres."
+      },
+      {
+        id: 2,
+        category: 'quant',
+        question: "A sum of money at simple interest amounts to Rs. 815 in 3 years and to Rs. 854 in 4 years. The sum is:",
+        options: ["Rs. 650", "Rs. 690", "Rs. 698", "Rs. 700"],
+        answer: 2,
+        explanation: "S.I. for 1 year = Rs. (854 - 815) = Rs. 39. S.I. for 3 years = Rs. (39 * 3) = Rs. 117. Principal = Rs. (815 - 117) = Rs. 698."
+      },
+      {
+        id: 3,
+        category: 'logical',
+        question: "Look at this series: 2, 1, (1/2), (1/4), ... What number should come next?",
+        options: ["(1/3)", "(1/8)", "(2/8)", "(1/16)"],
+        answer: 1,
+        explanation: "This is a simple division series. Each number is half of the previous number: 2 / 2 = 1; 1 / 2 = 1/2; (1/2) / 2 = 1/4; (1/4) / 2 = 1/8."
+      },
+      {
+        id: 4,
+        category: 'logical',
+        question: "Suresh is facing north. He turns 45 degrees in the anti-clockwise direction and then 180 degrees in the clockwise direction. Which direction is he facing now?",
+        options: ["North-East", "North-West", "South-East", "South-West"],
+        answer: 0,
+        explanation: "Net turn = 180 (clockwise) - 45 (anti-clockwise) = 135 degrees clockwise from North, which points to North-East."
+      },
+      {
+        id: 5,
+        category: 'verbal',
+        question: "Choose the word which is most nearly the SAME in meaning to: 'CANDID'",
+        options: ["Secretive", "Frank", "Deceitful", "Shy"],
+        answer: 1,
+        explanation: "Candid means truthful and straightforward; frank."
+      }
+    ];
+
+    // APP STATE
+    let state = {
+      solved: parseInt(localStorage.getItem('apti_solved') || '0'),
+      correct: parseInt(localStorage.getItem('apti_correct') || '0'),
+      bookmarks: JSON.parse(localStorage.getItem('apti_bookmarks') || '[]'),
+      activeQuiz: [],
+      currentIndex: 0,
+      timer: null,
+      timeLeft: 30
+    };
+
+    // INIT
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      updateStats();
+    });
+
+    // NAVIGATION
+    function showSection(name) {
+      ['home', 'practice', 'quiz', 'bookmarks'].forEach(sec => {
+        document.getElementById(`sec-${sec}`).classList.add('hidden');
+      });
+      document.getElementById(`sec-${name}`).classList.remove('hidden');
+      if(name === 'bookmarks') renderBookmarks();
+    }
+
+    // THEME SETUP
+    function initTheme() {
+      const toggle = document.getElementById('theme-toggle');
+      toggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+      });
+    }
+
+    // STATS UPDATE
+    function updateStats() {
+      document.getElementById('stat-solved').innerText = state.solved;
+      document.getElementById('stat-bookmarks').innerText = state.bookmarks.length;
+      const acc = state.solved === 0 ? 0 : Math.round((state.correct / state.solved) * 100);
+      document.getElementById('stat-accuracy').innerText = `${acc}%`;
+    }
+
+    // QUIZ LOGIC
+    function startQuickQuiz() {
+      state.activeQuiz = [...dataset].sort(() => 0.5 - Math.random()).slice(0, 3);
+      runQuiz();
+    }
+
+    function startCategoryQuiz(cat) {
+      state.activeQuiz = dataset.filter(q => q.category === cat);
+      runQuiz();
+    }
+
+    function initCustomQuiz() {
+      const cat = document.getElementById('cfg-category').value;
+      const len = parseInt(document.getElementById('cfg-length').value);
+      let list = cat === 'all' ? dataset : dataset.filter(q => q.category === cat);
+      state.activeQuiz = [...list].sort(() => 0.5 - Math.random()).slice(0, len);
+      runQuiz();
+    }
+
+    function runQuiz() {
+      state.currentIndex = 0;
+      showSection('quiz');
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      clearInterval(state.timer);
+      const q = state.activeQuiz[state.currentIndex];
+      document.getElementById('quiz-progress').innerText = `Question ${state.currentIndex + 1} of ${state.activeQuiz.length}`;
+      document.getElementById('quiz-question').innerText = q.question;
+      document.getElementById('quiz-explanation').classList.add('hidden');
+      document.getElementById('btn-next').classList.add('hidden');
+
+      // Update Bookmark state
+      const isBookmarked = state.bookmarks.includes(q.id);
+      document.getElementById('btn-bookmark').innerHTML = isBookmarked 
+        ? '<i class="fa-solid fa-bookmark text-amber-500"></i>' 
+        : '<i class="fa-regular fa-bookmark"></i>';
+
+      // Render Options
+      const container = document.getElementById('quiz-options');
+      container.innerHTML = '';
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "w-full text-left p-4 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-brand-500 dark:hover:border-brand-500 font-medium transition bg-gray-50 dark:bg-gray-700/50";
+        btn.innerText = opt;
+        btn.onclick = () => selectOption(idx);
+        container.appendChild(btn);
+      });
+
+      // Timer Setup
+      state.timeLeft = 30;
+      document.getElementById('quiz-timer').innerHTML = `<i class="fa-regular fa-clock mr-1"></i> 00:${state.timeLeft < 10 ? '0' : ''}${state.timeLeft}`;
+      state.timer = setInterval(() => {
+        state.timeLeft--;
+        document.getElementById('quiz-timer').innerHTML = `<i class="fa-regular fa-clock mr-1"></i> 00:${state.timeLeft < 10 ? '0' : ''}${state.timeLeft}`;
+        if(state.timeLeft <= 0) {
+          clearInterval(state.timer);
+          selectOption(-1);
+        }
+      }, 1000);
+    }
+
+    function selectOption(selectedIdx) {
+      clearInterval(state.timer);
+      const q = state.activeQuiz[state.currentIndex];
+      const opts = document.getElementById('quiz-options').children;
+
+      state.solved++;
+      if (selectedIdx === q.answer) {
+        state.correct++;
+      }
+
+      for (let i = 0; i < opts.length; i++) {
+        opts[i].disabled = true;
+        if (i === q.answer) {
+          opts[i].className = "w-full text-left p-4 rounded-xl border-2 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-900 dark:text-emerald-200 font-bold";
+        } else if (i === selectedIdx) {
+          opts[i].className = "w-full text-left p-4 rounded-xl border-2 border-rose-500 bg-rose-50 dark:bg-rose-950/30 text-rose-900 dark:text-rose-200 font-bold";
+        }
+      }
+
+      document.getElementById('explanation-text').innerText = q.explanation;
+      document.getElementById('quiz-explanation').classList.remove('hidden');
+      document.getElementById('btn-next').classList.remove('hidden');
+
+      // Persist Stats
+      localStorage.setItem('apti_solved', state.solved);
+      localStorage.setItem('apti_correct', state.correct);
+      updateStats();
+    }
+
+    function nextQuestion() {
+      if (state.currentIndex + 1 < state.activeQuiz.length) {
+        state.currentIndex++;
+        renderQuestion();
+      } else {
+        alert(`Quiz Complete! Score: ${state.correct}/${state.solved}`);
+        showSection('home');
+      }
+    }
+
+    function toggleBookmarkCurrent() {
+      const q = state.activeQuiz[state.currentIndex];
+      const idx = state.bookmarks.indexOf(q.id);
+      if(idx > -1) {
+        state.bookmarks.splice(idx, 1);
+      } else {
+        state.bookmarks.push(q.id);
+      }
+      localStorage.setItem('apti_bookmarks', JSON.stringify(state.bookmarks));
+      renderQuestion();
+      updateStats();
+    }
+
+    function renderBookmarks() {
+      const container = document.getElementById('bookmarks-container');
+      container.innerHTML = '';
+      const list = dataset.filter(q => state.bookmarks.includes(q.id));
+
+      if(list.length === 0) {
+        container.innerHTML = '<p class="text-gray-400">No saved questions yet.</p>';
+        return;
+      }
+
+      list.forEach(q => {
+        const item = document.createElement('div');
+        item.className = "bg-white dark:bg-gray-800 p-6 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm space-y-2";
+        item.innerHTML = `
+          <h4 class="font-bold text-lg">${q.question}</h4>
+          <p class="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Answer: ${q.options[q.answer]}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">${q.explanation}</p>
+        `;
+        container.appendChild(item);
+      });
+    }
+  </script>
+</body>
+</html>
