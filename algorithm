@@ -1,0 +1,18 @@
+2. Algorithm
+1. Start the program.
+2. Initialize the AptiDaily engine with the student's name and academic year.
+3. Load the question bank with questions, options, correct answers, topics, difficulty levels, and explanations.
+4. Filter questions matching the student's academic year.
+5. Exclude questions already marked as completed.
+6. If the filtered question pool is empty, use the complete question bank.
+7. Shuffle the available questions randomly.
+8. Select up to the specified number of questions for the daily challenge.
+9. Display each question and its options.
+10. Collect the selected answers.
+11. Compare each selected answer with the correct answer.
+12. Calculate the quiz score and update completed-question records.
+13. Update topic-wise correct and total answer statistics.
+14. If the quiz mode is daily, store the score against the specified date.
+15. Add the quiz attempt to the history.
+16. Calculate overall accuracy and display the student dashboard.
+17. Stop the program.
