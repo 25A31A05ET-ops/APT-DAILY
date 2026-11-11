@@ -1,0 +1,8 @@
+1. Project abstract
+Project Title: AptiDaily – C++ Core Placement Practice Engine
+
+AptiDaily is a C++-based aptitude practice system designed to help students prepare for placement examinations and competitive tests. The system maintains a question bank containing multiple-choice questions categorized by academic year, topic, and difficulty level.
+
+It generates daily challenges by filtering questions according to the student's active academic year, excluding previously completed questions whenever possible, and randomly shuffling the available questions. After quiz submission, the system evaluates the answers, calculates the score, updates topic-wise performance statistics, and records daily scores and quiz attempt history.
+
+The dashboard displays the total number of questions attempted, correct answers, overall accuracy, daily challenges completed, and topic-wise performance. The project demonstrates the practical application of C++ concepts, including structures, classes, vectors, hash maps, hash sets, randomization, and modular programming. AptiDaily provides a foundation for developing a more comprehensive aptitude learning and progress-tracking platform.
